@@ -12,11 +12,13 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String name;
+	private String email;
+	private String userRole;
+	private String password;
 	
 	public User() {}
 	
 	public User(String name) {
-		super();
 		this.name = name;
 	}
 	public Long getId() {
@@ -31,7 +33,29 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+	
 }
