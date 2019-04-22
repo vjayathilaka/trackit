@@ -1,8 +1,12 @@
 package com.myproject.trackit.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +18,7 @@ import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.service.ProjectService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ProjectController {
 	
@@ -40,8 +45,12 @@ public class ProjectController {
 		return projectService.saveProject(project);
 	}
 	
-	public Project deleteProject() {
-		return null;
+	@DeleteMapping(path="/projects/{id}")
+	public Map<String, Boolean> deleteProject(@PathVariable Long id) {
+		projectService.deleteProject(id);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return response;
 	}
 	
 	@GetMapping(path="/projects")
