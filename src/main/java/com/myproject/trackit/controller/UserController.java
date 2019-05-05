@@ -1,7 +1,12 @@
 package com.myproject.trackit.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +25,15 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(path="/users")
-	public String registerUser(@RequestBody User user) {	
+	public String registerUserMobail(@RequestBody User user) {	
+		return userService.registerUserMobail(user);	
+	}
+	
+	@PostMapping(path="/users/ui/")
+	public User registerUser(@RequestBody User user) {	
 		return userService.registerUser(user);	
 	}
+	
 	
 	@PostMapping(path="/login")
 	public UserLoginResponse loginUser(@RequestBody User user) {
@@ -38,5 +49,21 @@ public class UserController {
 	public String validateUser() {
 		return "success";
 	}
+	
+	
+	@GetMapping(path="/users")
+	public List<User> getAllUsers() {
+		return userService.getAllUsers();
+	}
+	
+	//my creation
+	@DeleteMapping(path="/users/{id}")
+	public Map<String, Boolean> deleteProject(@PathVariable Long id) {
+		userService.deleteUser(id);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return response;
+	}
+	
 
 }
