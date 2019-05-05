@@ -14,15 +14,23 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-
-	public String registerUser(User user) {
+	
+	public String registerUserMobail(User user) {
 		
 		User saveUser = userRepository.save(user);
 		
-		if(saveUser.getId() != null)
-			return "Success";
-		else 
-			return "User registration failed";
+		if(saveUser != null){
+			return "success";
+		} else {
+			return "error";
+		}
+	}
+
+	public User registerUser(User user) {
+		
+		User saveUser = userRepository.save(user);
+		
+		return saveUser;
 	}
 	
 	public UserLoginResponse login(User user) {
@@ -40,5 +48,15 @@ public class UserService {
 
 	public List<User> getUsersByUserRole(String userRole) {
 		return userRepository.findByUserRole(userRole);
+		
+	}
+
+	public List<User> getAllUsers() {
+		return (List<User>) userRepository.findAll();
+	}
+	
+	//my creation
+	public void deleteUser(Long userId) {
+		userRepository.deleteById(userId);
 	}
 }
