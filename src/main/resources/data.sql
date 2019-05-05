@@ -8,10 +8,10 @@ insert into user(id, name) values(20001, 'user 1');
 insert into user(id, name) values(20002, 'user 2');
 
 --Insert tasks
-insert into task(id, name, assignee_id, creator_id, project_id)
+insert into task(id, task_name, assignee_id, creator_id, project_id)
   values(30001, 'parent task 1', 20001, 20002, 10002);
   
-insert into task(id, name, assignee_id, creator_id, parent_task_id, project_id)
+insert into task(id, task_name, assignee_id, creator_id, parent_task_id, project_id)
   values(30002, 'task 2', 20001, 20002, 30001, 10002);
 
 

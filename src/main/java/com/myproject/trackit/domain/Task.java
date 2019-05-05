@@ -20,7 +20,7 @@ public class Task {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	private String name;
+	private String taskName;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -34,16 +34,19 @@ public class Task {
 	private User assignee;
 	
 	@ManyToOne
+	
 	private Task parentTask;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="task")
 	private List<Comment> comments;
 	
+	private String comment;
+	
 	public Task() {}
 
 	public Task(String name) {
-		this.name = name;
+		this.taskName = name;
 	}
 
 	public Long getId() {
@@ -55,11 +58,11 @@ public class Task {
 	}
 
 	public String getName() {
-		return name;
+		return taskName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.taskName = name;
 	}
 
 	public Project getProject() {
@@ -101,5 +104,13 @@ public class Task {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-		
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
 }

@@ -45,4 +45,12 @@ public class ProjectService {
 		projectRepository.deleteById(projectId);
 	}
 
+	public List<Task> getProjectTasksByStatus(Long projectId, String status) {
+		return projectRepository.findByIdAndStatus(projectId, status);
+	}
+
+	public List<Project> getProjectsByUserId(Long userId) {
+		return projectRepository.findByConstructorId(userId);
+	}
+
 }

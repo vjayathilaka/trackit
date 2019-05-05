@@ -18,7 +18,7 @@ import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.service.ProjectService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 @RestController
 public class ProjectController {
 	
@@ -33,6 +33,12 @@ public class ProjectController {
 	@GetMapping(path="/projects/{projectId}/tasks")
 	public List<Task> getProjectTasks(@PathVariable Long projectId){
 		return projectService.getProjectTasks(projectId);
+	}
+	
+	// ongoing / completed
+	@GetMapping(path="/projects/{projectId}/tasks/{status}")
+	public List<Task> getProjectTasksByStatus(@PathVariable Long projectId, @PathVariable String status){
+		return projectService.getProjectTasksByStatus(projectId, status);
 	}
 	
 	@PostMapping(path="/projects")
@@ -56,6 +62,11 @@ public class ProjectController {
 	@GetMapping(path="/projects")
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();
+	}
+	
+	@GetMapping(path="/projects/user/{userId}")
+	public List<Project> getProjectsByUserId(@PathVariable Long userId) {
+		return projectService.getProjectsByUserId(userId);
 	}
 
 }

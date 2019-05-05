@@ -1,5 +1,7 @@
 package com.myproject.trackit.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,11 @@ public class UserController {
 	@GetMapping(path="/users/validateLogin")
 	public String validateUser() {
 		return "success";
+	}
+	
+	@GetMapping(path="/users/role/{role}")
+	public List<User> getUsersByRole(@PathVariable String userRole) {
+		return userService.getUsersByUserRole(userRole);
 	}
 
 }

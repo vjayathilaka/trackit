@@ -2,23 +2,14 @@ package com.myproject.trackit.response;
 
 public class UserLoginResponse {
 
-	private String message;
+	private String userId;
 	private String role;
-	private String accessToken;
 	
-	public UserLoginResponse(String message, String role) {
-		this.message = message;
+	public UserLoginResponse(String userId, String role) {
+		this.userId = userId;
 		this.role = role;
 	}
-	
-	public String getMessage() {
-		return message;
-	}
-	
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
+
 	public String getRole() {
 		return role;
 	}
@@ -26,13 +17,13 @@ public class UserLoginResponse {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	public String getAccessToken() {
-		return accessToken;
+
+	public String getUserId() {
+		return userId;
 	}
-	
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

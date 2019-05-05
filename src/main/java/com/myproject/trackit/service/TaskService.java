@@ -53,4 +53,12 @@ public class TaskService {
 			
 	}
 
+	public Task getByUserId(Long userId) {
+		return null;
+	}
+
+	public Task saveTask(Task task) {
+		return taskRepository.save(task);
+	}
+
 }
