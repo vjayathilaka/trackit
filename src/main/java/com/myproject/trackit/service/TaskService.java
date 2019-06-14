@@ -52,6 +52,11 @@ public class TaskService {
 		return saveComment;
 			
 	}
+	
+	public List<Task> getByProjectIdAndStatus(Long projectId, String status){
+		List<Task> tasks = taskRepository.findByProjectIdAndStatus(projectId, status);
+		return tasks;
+	}
 
 	public Task getByUserId(Long userId) {
 		return null;

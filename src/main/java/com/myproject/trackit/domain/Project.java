@@ -19,11 +19,11 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	private String name;
+	private String projectName;
 	private String clientId;
-	private Date deadline;
+	private String deadline;
 	private String status;
-	
+	private String engineerId;
 	private String constructorId; 
 	
 	@JsonManagedReference
@@ -36,12 +36,26 @@ public class Project {
 	
 	public Project() {}
 	
+	public String getEngineerId() {
+		return engineerId;
+	}
+
+
+
+	public void setEngineerId(String engineerId) {
+		this.engineerId = engineerId;
+	}
+
+	public Project(long id) {
+		this.id = id;
+	}
+
 	public Project(String name) {
-		this.name = name;
+		this.projectName = name;
 	}
 	
 	public Project(String name, List<Task> tasks) {
-		this.name = name;
+		this.projectName = name;
 		this.tasks = tasks;
 	}
 	
@@ -53,12 +67,12 @@ public class Project {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getProjectName() {
+		return projectName;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setProjectName(String name) {
+		this.projectName = name;
 	}
 
 	public List<Task> getTasks() {
@@ -85,11 +99,11 @@ public class Project {
 		this.constructorId = constructorId;
 	}
 
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 

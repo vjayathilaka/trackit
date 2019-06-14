@@ -6,16 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myproject.trackit.domain.Issue;
 import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.repository.ProjectRepository;
+import com.myproject.trackit.repository.TaskRepository;
 
 @Service
 public class ProjectService {
 	
 	@Autowired
 	ProjectRepository projectRepository;
-	
+
 	public Project getProject(Long id) {
 		Optional<Project> optionalProject = projectRepository.findById(id);
 		if(optionalProject.isPresent())
@@ -45,12 +47,16 @@ public class ProjectService {
 		projectRepository.deleteById(projectId);
 	}
 
-	public List<Task> getProjectTasksByStatus(Long projectId, String status) {
-		return projectRepository.findByIdAndStatus(projectId, status);
-	}
-
 	public List<Project> getProjectsByUserId(Long userId) {
 		return projectRepository.findByConstructorId(userId);
+	}
+
+	public List<Issue> getProjectIssues(Long projectId) {
+		Optional<Project> optionalProject = projectRepository.findById(projectId);
+		if(optionalProject.isPresent())
+			return optionalProject.get().getIssues();
+		else
+			return null;
 	}
 
 }

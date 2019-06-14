@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myproject.trackit.domain.Comment;
+import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
+import com.myproject.trackit.domain.TaskRequest;
+import com.myproject.trackit.domain.TaskResponse;
+import com.myproject.trackit.domain.User;
 import com.myproject.trackit.service.TaskService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class TaskController {
 	
@@ -43,13 +47,22 @@ public class TaskController {
 	}
 	
 	@PutMapping(path="tasks")
-	public Task updateTask(@RequestBody Task task) {
+	public Task updateTask(@RequestBody TaskRequest taskRes) {
+		String status = "";
+		if(taskRes.getIsDone()) 
+			status = "completed";
+		
+		Task task = new Task(Long.parseLong(taskRes.getTaskId()), status);
 		return taskService.saveTask(task);
 	}
 	
 	@PostMapping(path="tasks")
-	public Task saveTask(@RequestBody Task task) {
-		return taskService.saveTask(task);
+	public TaskResponse saveTask(@RequestBody TaskRequest tr) {
+		Task task = new Task(tr.getTaskName(), new Project(Long.parseLong(tr.getAssignedProject())), 
+				new User(Long.parseLong(tr.getTaskAssignee())), tr.getTaskComment());
+		Task saveTask = taskService.saveTask(task);
+		
+		return new TaskResponse(Long.toString(saveTask.getId()));
 	}
 
 }

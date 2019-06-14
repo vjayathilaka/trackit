@@ -43,10 +43,25 @@ public class Task {
 	
 	private String comment;
 	
+	private String status;
+	
 	public Task() {}
 
 	public Task(String name) {
 		this.taskName = name;
+	}
+	
+	public Task(Long taskId, String status) {
+		this.id = taskId;
+		this.status = status;
+		
+	}
+
+	public Task(String taskName, Project project, User assignee, String comment) {
+		this.taskName = taskName;
+		this.project = project;
+		this.assignee = assignee;
+		this.comment = comment;
 	}
 
 	public Long getId() {
@@ -112,5 +127,23 @@ public class Task {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	
 }

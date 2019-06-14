@@ -1,19 +1,39 @@
 --Insert projects
-insert into project(id, name) values(10001, 'project 1');
-insert into project(id, name) values(10002, 'project 2');
-insert into project(id, name) values(10003, 'project 2');
+insert into project(id, project_name) values(10001, 'project 1');
+insert into project(id, project_name) values(10002, 'project 2');
+insert into project(id, project_name) values(10003, 'project 3');
 
 --Insert user
-insert into user(id, name) values(20001, 'user 1');
-insert into user(id, name) values(20002, 'user 2');
+insert into user(id, name, user_role, password) values(20001, 'pm@gmail.com', 'PM', '1234pm');
+insert into user(id, name, user_role, password) values(20002, 'pm2@gmail.com', 'PM', '1234pm2');
+insert into user(id, name, user_role, password) values(20003, 'pm3@gmail.com', 'PM', '1234pm3');
+insert into user(id, name, user_role, password) values(20006, 'cl@gmail.com', 'CL', '1234cl');
+insert into user(id, name, user_role, password) values(20007, 'cl2@gmail.com', 'CL', '1234cl2');
+insert into user(id, name, user_role, password) values(20008, 'cl3@gmail.com', 'CL', '1234cl3');
+insert into user(id, name, user_role, password) values(20011, 'con@gmail.com', 'CON', '1234con');
+insert into user(id, name, user_role, password) values(20012, 'con2@gmail.com', 'CON', '1234con2');
+insert into user(id, name, user_role, password) values(20013, 'con3@gmail.com', 'CON', '1234con3');
+insert into user(id, name, user_role, password) values(20017, 'eng@gmail.com', 'ENG', '1234eng');
+insert into user(id, name, user_role, password) values(20018, 'eng2@gmail.com', 'ENG', '1234eng2');
+insert into user(id, name, user_role, password) values(20019, 'eng3@gmail.com', 'ENG', '1234eng3');
+
 
 --Insert tasks
-insert into task(id, task_name, assignee_id, creator_id, project_id)
-  values(30001, 'parent task 1', 20001, 20002, 10002);
+insert into task(id, task_name, assignee_id, creator_id, project_id, status)
+  values(30001, 'parent task 1', 20011, 20002, 10002, 'ongoing');
   
-insert into task(id, task_name, assignee_id, creator_id, parent_task_id, project_id)
-  values(30002, 'task 2', 20001, 20002, 30001, 10002);
+insert into task(id, task_name, assignee_id, creator_id, parent_task_id, project_id, status)
+  values(30002, 'task 2', 20013, 20002, 30001, 10002, 'completed');
 
+insert into task(id, task_name, assignee_id, creator_id, project_id, status)
+  values(30003, 'task 3', 20012, 20003, 10001, 'ongoing');
+
+insert into task(id, task_name, assignee_id, creator_id, project_id, status)
+  values(30004, 'task 4', 20011, 20001, 10001, 'completed');
+insert into task(id, task_name, assignee_id, creator_id, project_id, status)
+  values(30005, 'task 5', 20012, 20002, 10003, 'ongoing');
+insert into task(id, task_name, assignee_id, creator_id, project_id, status)
+  values(30006, 'task 6', 20013, 20003, 10003, 'completed');
 
 --Insert comments
 insert into comment(id, comment, task_id, user_id)
@@ -21,4 +41,33 @@ insert into comment(id, comment, task_id, user_id)
 	
 insert into comment(id, comment, task_id, user_id)
 	values(40002, 'comment 2', 30001, 20002);
+
+--Insert issues
+insert into issue(id, comment, name, project_id)
+values(50001, 'comment 6', 'issue 01', 10001);
+
+insert into issue(id, comment, name, project_id)
+values(50002, 'comment 7', 'issue 02', 10001);
+
+insert into issue(id, comment, name, project_id)
+values(50003, 'comment 8', 'issue 03', 10001);
+
+insert into issue(id, comment, name, project_id)
+values(50004, 'comment 9', 'issue 04', 10002);
+
+insert into issue(id, comment, name, project_id)
+values(50005, 'comment 10', 'issue 05', 10002);
+
+insert into issue(id, comment, name, project_id)
+values(50006, 'comment 11', 'issue 06', 10002);
+
+insert into issue(id, comment, name, project_id)
+values(50007, 'comment 12', 'issue 07', 10003);
+
+insert into issue(id, comment, name, project_id)
+values(50008, 'comment 13', 'issue 08', 10003);
+
+insert into issue(id, comment, name, project_id)
+values(50009, 'comment 14', 'issue 09', 10003);
+
 

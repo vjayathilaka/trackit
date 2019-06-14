@@ -3,6 +3,7 @@ package com.myproject.trackit.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myproject.trackit.domain.Issue;
+import com.myproject.trackit.domain.IssueResponse;
 import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
+import com.myproject.trackit.domain.TaskResponse;
 import com.myproject.trackit.service.ProjectService;
+import com.myproject.trackit.service.TaskService;
 
 @CrossOrigin()
 @RestController
@@ -24,6 +29,8 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService projectService;
+	@Autowired
+	private TaskService taskService;
 
 	@GetMapping(path="/projects/{id}")
 	public Project getProject(@PathVariable Long id) {	
@@ -35,15 +42,38 @@ public class ProjectController {
 		return projectService.getProjectTasks(projectId);
 	}
 	
+	@GetMapping(path="/projects/{projectId}/issues")
+	public List<IssueResponse> getProjectIssues(@PathVariable Long projectId){
+		List<Issue> issues =  projectService.getProjectIssues(projectId);
+	
+		List<IssueResponse> issueResponses = issues.stream().map(i ->  new IssueResponse(Long.toString(i.getId()), i.getName(), i.getComment()))
+			.collect(Collectors.toList());
+		
+		return issueResponses;
+	}
+	
 	// ongoing / completed
 	@GetMapping(path="/projects/{projectId}/tasks/{status}")
-	public List<Task> getProjectTasksByStatus(@PathVariable Long projectId, @PathVariable String status){
-		return projectService.getProjectTasksByStatus(projectId, status);
+	public List<TaskResponse> getProjectTasksByStatus(@PathVariable Long projectId, @PathVariable String status){
+		List<Task> tasks = taskService.getByProjectIdAndStatus(projectId, status);
+		
+		List<TaskResponse> taskResponse = tasks.stream()
+			.map(task -> new TaskResponse(
+					Long.toString(task.getId()),
+					task.getName(), 
+					task.getAssignee().getName(),
+					task.getComment(),
+					""))
+			.collect(Collectors.toList());
+		
+		return taskResponse;
+		
 	}
 	
 	@PostMapping(path="/projects")
 	public Project saveProject(@RequestBody Project project) {
-		return projectService.saveProject(project);
+		Project saveProject = projectService.saveProject(project);
+		return saveProject;
 	}
 	
 	@PutMapping(path="/projects")

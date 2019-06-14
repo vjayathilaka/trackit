@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.trackit.service.FileUploadService;
 
-@CrossOrigin(value="http://localhost:4200")
+@CrossOrigin
 @RestController
 public class FileUploadController {
 	

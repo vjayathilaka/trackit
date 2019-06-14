@@ -1,5 +1,7 @@
 package com.myproject.trackit.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +26,14 @@ public class Issue {
 	@ManyToOne
 	@JoinColumn(name="project_id")
 	private Project project;
+	
+	public Issue() {}
+	
+	public Issue(String name, String comment, Project project) {
+		this.name = name;
+		this.comment = comment;
+		this.project = project;
+	}
 
 	public Long getId() {
 		return id;
@@ -55,8 +65,6 @@ public class Issue {
 
 	public void setProject(Project project) {
 		this.project = project;
-	}
-	
-	
+	}	
 
 }

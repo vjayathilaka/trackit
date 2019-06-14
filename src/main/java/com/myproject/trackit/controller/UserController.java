@@ -3,6 +3,7 @@ package com.myproject.trackit.controller;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myproject.trackit.domain.User;
+import com.myproject.trackit.domain.UserResponse;
 import com.myproject.trackit.response.UserLoginResponse;
 import com.myproject.trackit.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 @RestController
 public class UserController {
 	
@@ -25,7 +27,7 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(path="/users")
-	public String registerUserMobail(@RequestBody User user) {	
+	public User registerUserMobail(@RequestBody User user) {	
 		return userService.registerUserMobail(user);	
 	}
 	
@@ -50,9 +52,14 @@ public class UserController {
 		return "success";
 	}
 
-	@GetMapping(path="/users/role/{role}")
-	public List<User> getUsersByRole(@PathVariable String userRole) {
-		return userService.getUsersByUserRole(userRole);
+	@GetMapping(path="/users/userRole/{role}")
+	public List<UserResponse> getUsersByRole(@PathVariable String role) {
+		List<User> users = userService.getUsersByUserRole(role);
+		
+		List<UserResponse> userResponse = users.stream().map(user -> new UserResponse(user.getName(),Long.toString(user.getId())))
+			.collect(Collectors.toList());
+		
+		return userResponse;
 	}
 
 	@GetMapping(path="/users")

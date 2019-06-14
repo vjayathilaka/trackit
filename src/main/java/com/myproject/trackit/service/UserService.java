@@ -15,14 +15,14 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public String registerUserMobail(User user) {
+	public User registerUserMobail(User user) {
 		
 		User saveUser = userRepository.save(user);
 		
 		if(saveUser != null){
-			return "success";
+			return saveUser;
 		} else {
-			return "error";
+			return new User();
 		}
 	}
 
@@ -35,10 +35,10 @@ public class UserService {
 	
 	public UserLoginResponse login(User user) {
 		
-		User loginUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		User loginUser = userRepository.findByNameAndPassword(user.getEmail(), user.getPassword());
 		
 		if(loginUser != null && loginUser.getId() != null)
-			return new UserLoginResponse("success", user.getUserRole());
+			return new UserLoginResponse("success", loginUser.getUserRole());
 		return new UserLoginResponse("Login Failed", null);
 	}
 	

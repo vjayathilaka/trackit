@@ -16,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUploadService {
 	
-	private static final String FILE_DIRECTORY = "file:///D:/hiranProject/fileDir/";
+	private static final String FILE_DIRECTORY = "file:////home/kasuni/hiranProject/images";
 	
-	private static final String FILE_DIRECTORY1 = "D:/hiranProject/fileDir/";
+	private static final String FILE_DIRECTORY1 = "/home/kasuni/hiranProject/images";
 
 	public void saveFile(MultipartFile file) throws IOException {
 		
