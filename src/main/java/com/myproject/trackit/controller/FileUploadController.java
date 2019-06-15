@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.myproject.trackit.domain.FileUploadResponse;
 import com.myproject.trackit.service.FileUploadService;
+import com.myproject.trackit.service.TaskService;
 
 @CrossOrigin
 @RestController
@@ -25,14 +27,19 @@ public class FileUploadController {
 	
 	private FileUploadService fileUploadService;
 	
+	private TaskService taskService;
+	
 	@Autowired
-	public FileUploadController(FileUploadService fileUploadService) {
+	public FileUploadController(FileUploadService fileUploadService, TaskService taskService) {
 		this.fileUploadService = fileUploadService;
+		this.taskService = taskService;
 	}
 	
 	@PostMapping(value="/file/upload")
-	public void handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-		fileUploadService.saveFile(file);
+	public FileUploadResponse handleFileUpload(@RequestParam("projectFloorPlan") MultipartFile file) throws IOException {
+		String fileName = fileUploadService.saveFile(file);
+		
+		return new FileUploadResponse(fileName);
 	}
 	
 	
@@ -40,9 +47,39 @@ public class FileUploadController {
 		fileUploadService.saveFile(file);
 	}
 	
-	@GetMapping(value="/file/download/{fileName}")
+	@GetMapping(value="/file/download/task/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-    	 
+    	
+		Long taskId = Long.parseLong(fileName);
+		
+		Long projectId = taskService.getById(taskId).getProject().getId();
+		
+		String projectMapFileName = "floorPlan_"+projectId;
+		
+		return getFileResource(projectMapFileName, request);
+    }
+	
+	@GetMapping(value="/file/download/issue/{fileName}")
+    public ResponseEntity<Resource> downloadIssueFile(@PathVariable String fileName, HttpServletRequest request) {
+    	
+		Long id = Long.parseLong(fileName);
+
+		String projectMapFileName = Long.toString(id);
+		
+		return getFileResource(projectMapFileName, request);
+    }
+	
+	@GetMapping(value="/file/download/project/{fileName}")
+    public ResponseEntity<Resource> downloadProjectFile(@PathVariable String fileName, HttpServletRequest request) {
+    	
+		Long id = Long.parseLong(fileName);
+
+		String projectMapFileName = "floorPlan_"+id;
+		
+		return getFileResource(projectMapFileName, request);
+    }
+	
+	private ResponseEntity<Resource> getFileResource(String fileName , HttpServletRequest request) {
         Resource resource = fileUploadService.loadFileAsResource(fileName);
 
         String contentType = null;
@@ -60,6 +97,6 @@ public class FileUploadController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
-    }
+	}
 
 }

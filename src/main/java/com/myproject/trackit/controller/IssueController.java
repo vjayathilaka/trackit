@@ -1,5 +1,7 @@
 package com.myproject.trackit.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,14 @@ public class IssueController {
 	
 	@PostMapping(path="issues")
 	public IssueResponse saveIssue(@RequestBody IssueRequest issueRequest) {
+		
+		if(issueRequest.getName()== null || issueRequest.getName().isEmpty()) {
+			String uniqueID = UUID.randomUUID().toString();
+			String issueName = "Issue for project-"+issueRequest.getProjectId()+"-"+uniqueID;
+			issueRequest.setName(issueName);
+		}
+			
+		
 		Issue issue = new Issue(issueRequest.getName(), issueRequest.getComment(),
 			new Project(Integer.parseInt(issueRequest.getProjectId())));
 		Issue saveIssue = issueService.saveIssue(issue);

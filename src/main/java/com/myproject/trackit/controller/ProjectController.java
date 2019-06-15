@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myproject.trackit.domain.Issue;
 import com.myproject.trackit.domain.IssueResponse;
 import com.myproject.trackit.domain.Project;
+import com.myproject.trackit.domain.ProjectResponse;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.domain.TaskResponse;
 import com.myproject.trackit.service.ProjectService;
@@ -71,9 +72,9 @@ public class ProjectController {
 	}
 	
 	@PostMapping(path="/projects")
-	public Project saveProject(@RequestBody Project project) {
+	public ProjectResponse saveProject(@RequestBody Project project) {
 		Project saveProject = projectService.saveProject(project);
-		return saveProject;
+		return new ProjectResponse(Long.toString(saveProject.getId()));
 	}
 	
 	@PutMapping(path="/projects")

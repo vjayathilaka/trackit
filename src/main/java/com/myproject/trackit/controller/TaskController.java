@@ -60,6 +60,7 @@ public class TaskController {
 	public TaskResponse saveTask(@RequestBody TaskRequest tr) {
 		Task task = new Task(tr.getTaskName(), new Project(Long.parseLong(tr.getAssignedProject())), 
 				new User(Long.parseLong(tr.getTaskAssignee())), tr.getTaskComment());
+		task.setStatus("ongoing");
 		Task saveTask = taskService.saveTask(task);
 		
 		return new TaskResponse(Long.toString(saveTask.getId()));

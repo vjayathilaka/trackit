@@ -20,17 +20,21 @@ public class FileUploadService {
 	
 	private static final String FILE_DIRECTORY1 = "/home/kasuni/hiranProject/images";
 
-	public void saveFile(MultipartFile file) throws IOException {
+	public String saveFile(MultipartFile file) throws IOException {
 		
-		Path filePath = Paths.get(FILE_DIRECTORY1 + file.getOriginalFilename());
+		String fileName = file.getOriginalFilename();
+		
+		Path filePath = Paths.get(FILE_DIRECTORY1 +"/"+ fileName);
 		
 		Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		
+		return fileName;
 		
 	}
 	
     public Resource loadFileAsResource(String fileName) {
         try {
-        	URI uri = new URI(FILE_DIRECTORY  + fileName);
+        	URI uri = new URI(FILE_DIRECTORY +"/" + fileName);
 
             Resource resource = new UrlResource(uri);
             if(resource.exists()) {
