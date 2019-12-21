@@ -99,8 +99,23 @@ public class ProjectController {
 	}
 	
 	@GetMapping(path="/projects/user/{userId}")
-	public List<Project> getProjectsByUserId(@PathVariable Long userId) {
+	public List<Project> getProjectsByUserId(@PathVariable String userId) {
 		return projectService.getProjectsByUserId(userId);
+	}
+
+	@GetMapping(path="/projects/client/{clientId}")
+	public List<Project> getProjectsByClientId(@PathVariable String clientId) {
+		return projectService.getProjectsByClientId(clientId);
+	}
+
+	@GetMapping(path="/projects/constructor/{constroctorId}")
+	public List<Project> getProjectsByConstructorId(@PathVariable String constroctorId) {
+		return projectService.getProjectsByConstructorId(constroctorId);
+	}
+
+	@GetMapping(path="/projects/engineer/{engineerId}")
+	public List<Project> getProjectsByEngineerId(@PathVariable String engineerId) {
+		return projectService.getProjectsByEngineerId(engineerId);
 	}
 
 }

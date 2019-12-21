@@ -3,9 +3,9 @@
 --insert into project(id, project_name, status) values(10002, 'project 2','completed');
 --insert into project(id, project_name, status) values(10003, 'project 3','ongoing');
 
-insert into project(id, project_name, client_id, status) values(10001, 'project 1',20006,'ongoing');
-insert into project(id, project_name, client_id, status) values(10002, 'project 2',20006,'completed');
-insert into project(id, project_name, client_id, status) values(10003, 'project 3',20007,'ongoing');
+insert into project(id, project_name, client_id, status, project_mgr_id) values(10001, 'project 1',20006,'ongoing',20001);
+insert into project(id, project_name, client_id, status, project_mgr_id) values(10002, 'project 2',20006,'completed', 20001);
+insert into project(id, project_name, client_id, status, project_mgr_id) values(10003, 'project 3',20007,'ongoing', 20002);
 
 --Insert user
 insert into user(id, name, email,user_role, password) values(20001, 'pmanager01','pm1@gmail.com','PM', '9ughWviKqRrtM7I1kEBANg==');

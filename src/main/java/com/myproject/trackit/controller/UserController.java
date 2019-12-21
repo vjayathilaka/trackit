@@ -91,6 +91,4 @@ public class UserController {
 	public List<User> getAllUsersAng() {
 		return userService.getAllUsersAng();
 	}
-	
-
 }

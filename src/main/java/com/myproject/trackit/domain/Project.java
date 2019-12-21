@@ -23,7 +23,8 @@ public class Project {
 	private String deadline;
 	private String status;
 	private String engineerId;
-	private String constructorId; 
+	private String constructorId;
+	private String projectMgrId;
 	
 	@JsonManagedReference
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="project", fetch=FetchType.LAZY)
@@ -122,4 +123,11 @@ public class Project {
 		this.issues = issues;
 	}
 
+	public String getProjectMgrId() {
+		return projectMgrId;
+	}
+
+	public void setProjectMgrId(String projectMgrId) {
+		this.projectMgrId = projectMgrId;
+	}
 }

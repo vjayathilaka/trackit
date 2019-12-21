@@ -53,7 +53,7 @@ public class ProjectService {
 		projectRepository.deleteById(projectId);
 	}
 
-	public List<Project> getProjectsByUserId(Long userId) {
+	public List<Project> getProjectsByUserId(String userId) {
 		return projectRepository.findByConstructorId(userId);
 	}
 
@@ -78,4 +78,15 @@ public class ProjectService {
 	}
 	
 
+	public List<Project> getProjectsByClientId(String clientId) {
+		return projectRepository.findByClientId(clientId);
+	}
+
+	public List<Project> getProjectsByConstructorId(String constroctorId) {
+		return projectRepository.findByConstructorId(constroctorId );
+	}
+
+	public List<Project> getProjectsByEngineerId(String engineerId) {
+		return projectRepository.findByEngineerId(engineerId);
+	}
 }
