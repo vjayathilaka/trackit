@@ -7,6 +7,8 @@ public class TaskRequest {
     private String taskComment;
     private String assignedProject;
     private boolean isDone;
+    //modification
+    private String taskStatus;
     
 	public String getTaskName() {
 		return taskName;
@@ -43,6 +45,13 @@ public class TaskRequest {
 	}
 	public void setIsDone(boolean isDone) {
 		this.isDone = isDone;
+	}
+	//modification
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
 	}
 
 }

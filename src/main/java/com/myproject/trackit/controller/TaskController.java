@@ -1,7 +1,5 @@
 package com.myproject.trackit.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myproject.trackit.domain.Comment;
 import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.domain.TaskRequest;
@@ -30,17 +27,7 @@ public class TaskController {
 	public Task getTaskById(@PathVariable Long id) {		
 		return taskService.getById(id);
 	}
-	
-	@GetMapping(path="/tasks/{taskId}/comments")
-	public List<Comment> getCommentsByTaskId(@PathVariable Long taskId) {
-		return taskService.getCommentsById(taskId);
-	}
-	
-	@PostMapping(path="tasks/{taskId}/comments")
-	public Comment saveTaskComment(@PathVariable Long taskId, @RequestBody Comment comment) {
-		return taskService.saveTaskComment(taskId, comment);
-	}
-	
+
 	@GetMapping(path="/tasks/user/{userId}")
 	public Task getTaskByUserId(@PathVariable Long userId) {		
 		return taskService.getByUserId(userId);
@@ -59,11 +46,19 @@ public class TaskController {
 	@PostMapping(path="tasks")
 	public TaskResponse saveTask(@RequestBody TaskRequest tr) {
 		Task task = new Task(tr.getTaskName(), new Project(Long.parseLong(tr.getAssignedProject())), 
-				new User(Long.parseLong(tr.getTaskAssignee())), tr.getTaskComment());
+				new User(Long.parseLong(tr.getTaskAssignee())), tr.getTaskComment(),tr.getTaskStatus());
 		task.setStatus("ongoing");
 		Task saveTask = taskService.saveTask(task);
 		
 		return new TaskResponse(Long.toString(saveTask.getId()));
+	}
+	
+	//my
+	@PostMapping(path="/tasks/ui/")
+	public Task saveTask(@RequestBody Task task) {
+	
+		return taskService.saveTask(task);
+		
 	}
 
 }

@@ -1,13 +1,13 @@
 package com.myproject.trackit.service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myproject.trackit.domain.Issue;
-
 import com.myproject.trackit.repository.IssueRepository;
 
 @Service
@@ -33,6 +33,11 @@ public class IssueService {
 
 	public Issue saveIssue(Issue issue) {
 		return issueRepository.save(issue);
+	}
+	
+	//get all issues
+	public List<Issue> getAllIssues(){
+		return (List<Issue>) issueRepository.findAll();
 	}
 	
 

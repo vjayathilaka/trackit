@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myproject.trackit.controller.AES;
 import com.myproject.trackit.domain.User;
 import com.myproject.trackit.repository.UserRepository;
 import com.myproject.trackit.response.UserLoginResponse;
@@ -17,6 +18,12 @@ public class UserService {
 	
 	public User registerUserMobail(User user) {
 		
+		String password = user.getPassword();
+		
+		String encriptedPassword = encriptPassword(password);
+		
+		user.setPassword(encriptedPassword);
+		
 		User saveUser = userRepository.save(user);
 		
 		if(saveUser != null){
@@ -28,6 +35,12 @@ public class UserService {
 
 	public User registerUser(User user) {
 		
+		String password = user.getPassword();
+		
+		String encriptedPassword = encriptPassword(password);
+		
+		user.setPassword(encriptedPassword);
+		
 		User saveUser = userRepository.save(user);
 		
 		return saveUser;
@@ -35,11 +48,51 @@ public class UserService {
 	
 	public UserLoginResponse login(User user) {
 		
-		User loginUser = userRepository.findByNameAndPassword(user.getEmail(), user.getPassword());
+		String password = user.getPassword();
+		
+		String encriptedPassword = encriptPassword(password);
+		
+		user.setPassword(encriptedPassword);
+		
+		User loginUser = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+		
+		if(loginUser != null && loginUser.getId() != null) {
+//		return new UserLoginResponse("success", loginUser.getUserRole());
+			
+		return new UserLoginResponse(loginUser.getUserRole(), loginUser.getId());
+		}
+		else {
+		return new UserLoginResponse("Login Failed", null);
+		}
+	}
+	
+	
+	//
+	public User loginAng(User user) {
+		
+		String password = user.getPassword();
+		
+		String encriptedPassword = encriptPassword(password);
+		
+		user.setPassword(encriptedPassword);
+		
+		User loginUser = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
 		
 		if(loginUser != null && loginUser.getId() != null)
-			return new UserLoginResponse("success", loginUser.getUserRole());
-		return new UserLoginResponse("Login Failed", null);
+			return new User(loginUser.getName());
+		return new User();
+	}
+	
+	private String encriptPassword(String password) {
+		
+	    final String secretKey = "ssshhhhhhhhhhh!!!!";
+	     
+	    String originalPassword = password;
+	    
+		String encriptedPasswrod = AES.encrypt(originalPassword, secretKey);
+//		String decryptedString = AES.decrypt(encriptedPasswrod, secretKey) ;
+		
+		return encriptedPasswrod;
 	}
 	
 	public User getById(Long id) {
@@ -50,13 +103,24 @@ public class UserService {
 		return userRepository.findByUserRole(userRole);
 		
 	}
+	//
 
 	public List<User> getAllUsers() {
 		return (List<User>) userRepository.findAll();
 	}
 	
-	//my creation
+	//
 	public void deleteUser(Long userId) {
 		userRepository.deleteById(userId);
+	}
+	
+//	//Angular Assignee for add project
+//	public User getByIdAngular(Long id) {
+//		return userRepository.findById(id).get();
+//	}
+	
+	//
+	public List<User> getAllUsersAng() {
+		return (List<User>) userRepository.findAll();
 	}
 }

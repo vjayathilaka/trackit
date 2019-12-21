@@ -1,6 +1,8 @@
 package com.myproject.trackit.controller;
 
 import java.util.UUID;
+import java.nio.ByteBuffer;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +19,7 @@ import com.myproject.trackit.domain.IssueResponse;
 import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.service.IssueService;
 
-import antlr.collections.List;
+//import antlr.collections.List;
 
 @CrossOrigin
 @RestController
@@ -37,12 +39,19 @@ public class IssueController {
 		return issueService.saveIssue(issue);
 	}
 	
+	
+	
 	@PostMapping(path="issues")
 	public IssueResponse saveIssue(@RequestBody IssueRequest issueRequest) {
 		
 		if(issueRequest.getName()== null || issueRequest.getName().isEmpty()) {
-			String uniqueID = UUID.randomUUID().toString();
-			String issueName = "Issue for project-"+issueRequest.getProjectId()+"-"+uniqueID;
+//			String uniqueID = UUID.randomUUID().toString();
+			
+			  UUID uniqueID = UUID.randomUUID();
+			  long l = ByteBuffer.wrap(uniqueID.toString().getBytes()).getLong();
+			  Long.toString(l, Character.MAX_RADIX);
+			
+			String issueName = "Issue for project id- "+issueRequest.getProjectId()+"-"+l;
 			issueRequest.setName(issueName);
 		}
 			
@@ -52,6 +61,12 @@ public class IssueController {
 		Issue saveIssue = issueService.saveIssue(issue);
 		
 		return new IssueResponse(Long.toString(saveIssue.getId()));
+	}
+	
+	//get all issues
+	@GetMapping(path="/issues")
+	public List<Issue> getAllIssues() {
+		return issueService.getAllIssues();
 	}
 
 	

@@ -42,6 +42,11 @@ public class UserController {
 		return userService.login(user);
 	}
 	
+	@PostMapping(path="/loginAng")
+	public User loginUserAng(@RequestBody User user) {
+		return userService.loginAng(user);
+	}
+	
 	@GetMapping(path="/users/{id}")
 	public User getById(@PathVariable Long id) {
 		return userService.getById(id);
@@ -61,13 +66,13 @@ public class UserController {
 		
 		return userResponse;
 	}
-
+//
 	@GetMapping(path="/users")
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 	
-	//my creation
+	//delete
 	@DeleteMapping(path="/users/{id}")
 	public Map<String, Boolean> deleteProject(@PathVariable Long id) {
 		userService.deleteUser(id);
@@ -75,5 +80,17 @@ public class UserController {
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+	
+	
+//	@GetMapping(path="/users/ui/{id}")
+//	public User getByIdAngular(@PathVariable Long id) {
+//		return userService.getByIdAngular(id);
+//	}
+	
+	@GetMapping(path="/users/ang")
+	public List<User> getAllUsersAng() {
+		return userService.getAllUsersAng();
+	}
+	
 
 }

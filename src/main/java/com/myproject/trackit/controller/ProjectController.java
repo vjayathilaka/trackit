@@ -64,6 +64,7 @@ public class ProjectController {
 					task.getName(), 
 					task.getAssignee().getName(),
 					task.getComment(),
+					task.getStatus(),
 					""))
 			.collect(Collectors.toList());
 		
@@ -73,6 +74,7 @@ public class ProjectController {
 	
 	@PostMapping(path="/projects")
 	public ProjectResponse saveProject(@RequestBody Project project) {
+		project.setStatus("ongoing");
 		Project saveProject = projectService.saveProject(project);
 		return new ProjectResponse(Long.toString(saveProject.getId()));
 	}
@@ -90,6 +92,7 @@ public class ProjectController {
 		return response;
 	}
 	
+	//project list provide
 	@GetMapping(path="/projects")
 	public List<Project> getAllProjects() {
 		return projectService.getAllProjects();

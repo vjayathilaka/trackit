@@ -11,6 +11,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+//	private Long userId;
 	private String name;
 	private String email;
 	private String userRole;
@@ -22,15 +23,27 @@ public class User {
 		this.id = id;
 	}
 	
+	//modification
+//	public User(Long userId) {
+//		this.userId = userId;
+//	}
+	
 	public User(String name) {
 		this.name = name;
 	}
+	
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long userId) {
+		this.id = userId;
 	}
+//	public Long getId() {
+//		return id;
+//	}
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 	public String getName() {
 		return name;
 	}

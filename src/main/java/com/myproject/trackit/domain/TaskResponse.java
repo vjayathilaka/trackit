@@ -7,18 +7,22 @@ public class TaskResponse {
     private String taskAssignee;
     private String taskComment;
     private String taskResourceId;
+    //modification
+    private String taskStatus;
 
 	public TaskResponse(String taskId) {
 		this.taskId = taskId;
 	}
 	
 	public TaskResponse(String taskId, String taskName, String taskAssignee, String taskComment,
-			String taskResourceId) {
+			String taskResourceId, String taskStatus) {
 		this.taskId = taskId;
 		this.taskName = taskName;
 		this.taskAssignee = taskAssignee;
 		this.taskComment = taskComment;
 		this.taskResourceId = taskResourceId;
+		//
+		this.taskStatus = taskStatus;
 	}
 
 	public String getTaskName() {
@@ -59,5 +63,13 @@ public class TaskResponse {
 
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
+	}
+	//modification
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
 	}
 }

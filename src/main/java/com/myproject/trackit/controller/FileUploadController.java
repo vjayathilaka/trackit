@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -70,13 +72,36 @@ public class FileUploadController {
     }
 	
 	@GetMapping(value="/file/download/project/{fileName}")
-    public ResponseEntity<Resource> downloadProjectFile(@PathVariable String fileName, HttpServletRequest request) {
+    public ResponseEntity<Resource> downloadProjectFileMobile(@PathVariable String fileName, HttpServletRequest request) {
     	
 		Long id = Long.parseLong(fileName);
 
 		String projectMapFileName = "floorPlan_"+id;
 		
 		return getFileResource(projectMapFileName, request);
+    }
+	
+	@GetMapping(value="/app/file/download/issue/{fileName}")
+    public ResponseEntity<InputStreamResource> downloadIssueImage(@PathVariable String fileName, HttpServletRequest request) throws IOException {
+
+		Resource imgFile = fileUploadService.loadFileAsResource(fileName);
+	        return ResponseEntity
+	                .ok()
+	                .contentType(MediaType.IMAGE_PNG)
+	                .body(new InputStreamResource(imgFile.getInputStream()));
+    }
+	
+	@GetMapping(value="/app/file/download/project/{fileName}")
+    public ResponseEntity<InputStreamResource> downloadProjectImage(@PathVariable String fileName, HttpServletRequest request) throws IOException {
+		Long id = Long.parseLong(fileName);
+
+		String projectMapFileName = "floorPlan_"+id;
+		
+		Resource imgFile = fileUploadService.loadFileAsResource(projectMapFileName);
+	        return ResponseEntity
+	                .ok()
+	                .contentType(MediaType.IMAGE_PNG)
+	                .body(new InputStreamResource(imgFile.getInputStream()));
     }
 	
 	private ResponseEntity<Resource> getFileResource(String fileName , HttpServletRequest request) {
