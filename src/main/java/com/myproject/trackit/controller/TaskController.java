@@ -1,13 +1,7 @@
 package com.myproject.trackit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.myproject.trackit.domain.Project;
 import com.myproject.trackit.domain.Task;
@@ -15,6 +9,10 @@ import com.myproject.trackit.domain.TaskRequest;
 import com.myproject.trackit.domain.TaskResponse;
 import com.myproject.trackit.domain.User;
 import com.myproject.trackit.service.TaskService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -28,22 +26,29 @@ public class TaskController {
 		return taskService.getById(id);
 	}
 
+	@GetMapping(path="/tasks")
+	public List<Task> getTaskById() {
+		return taskService.getAllTasks();
+	}
+
 	@GetMapping(path="/tasks/user/{userId}")
 	public Task getTaskByUserId(@PathVariable Long userId) {		
 		return taskService.getByUserId(userId);
 	}
 	
-	@PutMapping(path="tasks")
+	@PutMapping(path="/tasks")
 	public Task updateTask(@RequestBody TaskRequest taskRes) {
-		String status = "";
-		if(taskRes.getIsDone()) 
+		Task task = taskService.getById(Long.parseLong(taskRes.getTaskId()));
+
+		String status = task.getStatus();
+		if(taskRes.getIsDone())
 			status = "completed";
-		
-		Task task = new Task(Long.parseLong(taskRes.getTaskId()), status);
+		task.setStatus(status);
+
 		return taskService.saveTask(task);
 	}
 	
-	@PostMapping(path="tasks")
+	@PostMapping(path="/tasks")
 	public TaskResponse saveTask(@RequestBody TaskRequest tr) {
 		Task task = new Task(tr.getTaskName(), new Project(Long.parseLong(tr.getAssignedProject())), 
 				new User(Long.parseLong(tr.getTaskAssignee())), tr.getTaskComment(),tr.getTaskStatus());
@@ -61,4 +66,11 @@ public class TaskController {
 		
 	}
 
+	@DeleteMapping(path="/tasks/{id}")
+	public Map<String, Boolean> deleteById(@PathVariable Long id) {
+		taskService.deleteTask(id);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return response;
+	}
 }

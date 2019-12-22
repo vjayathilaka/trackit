@@ -34,10 +34,17 @@ public class TaskService {
 	}
 
 	public Task saveTask(Task task) {
-		task.setStatus("ongoing");
 		return taskRepository.save(task);
 	}
-	
+
+	public void deleteTask(Long id) {
+		taskRepository.deleteById(id);
+	}
+
+	public List<Task> getAllTasks() {
+		return taskRepository.findAll();
+	}
+
 //	//angular save task
 //	public Task createTask(Task task) {
 //		Task saveTask = taskRepository.save(task);
