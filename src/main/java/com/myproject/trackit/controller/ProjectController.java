@@ -118,4 +118,9 @@ public class ProjectController {
 		return projectService.getProjectsByEngineerId(engineerId);
 	}
 
+	@GetMapping(path="/projects/projectmgr/{mgrId}")
+	public List<Project> getProjectsByProjectMgrId(@PathVariable String mgrId) {
+		return projectService.getProjectsByProjectMgrId(mgrId);
+	}
+
 }

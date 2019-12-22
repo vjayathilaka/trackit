@@ -40,8 +40,6 @@ public class Project {
 		return engineerId;
 	}
 
-
-
 	public void setEngineerId(String engineerId) {
 		this.engineerId = engineerId;
 	}

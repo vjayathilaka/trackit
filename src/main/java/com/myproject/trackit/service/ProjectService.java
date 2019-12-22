@@ -89,4 +89,8 @@ public class ProjectService {
 	public List<Project> getProjectsByEngineerId(String engineerId) {
 		return projectRepository.findByEngineerId(engineerId);
 	}
+
+	public List<Project> getProjectsByProjectMgrId(String mgrId) {
+		return projectRepository.findByProjectMgrId(mgrId);
+	}
 }

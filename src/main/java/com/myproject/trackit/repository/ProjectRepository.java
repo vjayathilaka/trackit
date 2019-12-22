@@ -18,4 +18,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long>{
 	List<Project> findByClientId(String clientId);// select * from project where client_id=clientId
 
 	List<Project> findByEngineerId(String engineerId);
+
+    List<Project> findByProjectMgrId(String mgrId);
 }

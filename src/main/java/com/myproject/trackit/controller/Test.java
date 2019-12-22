@@ -2,25 +2,44 @@ package com.myproject.trackit.controller;
 
 public class Test {
 
-    public static void main(String[] args) {
+    public static void mainkkkkkk(String[] args) {
 
-        String value = method1(1);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUserId(1);
+        loginResponse.setName("vijitha");
+        loginResponse.setUserRole("PM");
 
-        int addedValues = add(1, 2);
-
-        System.out.println(value);
+        System.out.println(loginResponse.getName());
 
     }
+}
 
-    public static String method1(int number) {
-        return method2(number);
+class LoginResponse {
+    int userId;
+    String name;
+    String userRole;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public static String method2(int abc) {
-        return Integer.toString(abc) + "_vijitha";
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public static int add(int a, int b) {
-        return a + b;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }

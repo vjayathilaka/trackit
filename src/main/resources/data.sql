@@ -7,7 +7,7 @@ insert into project(id, project_name, client_id, status, project_mgr_id) values(
 insert into project(id, project_name, client_id, status, project_mgr_id) values(10002, 'project 2',20006,'completed', 20001);
 insert into project(id, project_name, client_id, status, project_mgr_id) values(10003, 'project 3',20007,'ongoing', 20002);
 
---Insert user
+#Insert user
 insert into user(id, name, email,user_role, password) values(20001, 'pmanager01','pm1@gmail.com','PM', '9ughWviKqRrtM7I1kEBANg==');
 insert into user(id, name, email,user_role, password) values(20002, 'pmanager02','pm2@gmail.com','PM', '1234pm2');
 insert into user(id, name, email,user_role, password) values(20003, 'pmanager03','pm3@gmail.com','PM', '1234pm3');
