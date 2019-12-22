@@ -40,7 +40,7 @@ public class FileUploadService {
             if(resource.exists()) {
                 return resource;
             } else {
-                throw new Exception();
+                throw new Exception("imgage not found") ;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
