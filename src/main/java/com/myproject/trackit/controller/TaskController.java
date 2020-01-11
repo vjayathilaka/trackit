@@ -36,7 +36,7 @@ public class TaskController {
 		return taskService.getByUserId(userId);
 	}
 	
-	@PutMapping(path="/tasks")
+	@PostMapping(path="/tasksupdate")
 	public Task updateTask(@RequestBody TaskRequest taskRes) {
 		Task task = taskService.getById(Long.parseLong(taskRes.getTaskId()));
 

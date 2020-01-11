@@ -1,16 +1,13 @@
 package com.myproject.trackit.domain;
 
+import java.io.File;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Project {
@@ -25,6 +22,9 @@ public class Project {
 	private String engineerId;
 	private String constructorId;
 	private String projectMgrId;
+
+	@Transient
+	private MultipartFile image;
 	
 	@JsonManagedReference
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="project", fetch=FetchType.LAZY)
@@ -127,5 +127,14 @@ public class Project {
 
 	public void setProjectMgrId(String projectMgrId) {
 		this.projectMgrId = projectMgrId;
+	}
+
+
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 }

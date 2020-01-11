@@ -29,8 +29,18 @@ public class ProjectController {
 	private UserService userService;
 
 	@GetMapping(path="/projects/{id}")
-	public Project getProject(@PathVariable Long id) {	
-		return projectService.getProject(id);	
+	public ProjectResponseMobile getProject(@PathVariable Long id) {
+
+		Project p = projectService.getProject(id);
+
+		ProjectResponseMobile projectRes = new ProjectResponseMobile(p.getId(),p.getProjectName(),p.getClientId(),p.getDeadline(),p.getStatus(),p.getEngineerId(),p.getConstructorId(),p.getProjectMgrId());
+
+		projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+		projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+		projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+		projectRes.setCliName(p.getClientId() != null ? userService.getById(Long.parseLong(p.getClientId())).getName(): "");
+
+		return projectRes;
 	}
 	
 	@GetMapping(path="/projects/{projectId}/tasks")
@@ -83,7 +93,16 @@ public class ProjectController {
 	
 	@PutMapping(path="/projects")
 	public Project updateProject(@RequestBody Project project) {
-		return projectService.saveProject(project);
+
+		Project savedProject = projectService.saveProject(project);
+
+		try {
+			fileUploadService.saveProjectFile(project.getImage(), savedProject.getId());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return savedProject;
 	}
 	
 	@DeleteMapping(path="/projects/{id}")

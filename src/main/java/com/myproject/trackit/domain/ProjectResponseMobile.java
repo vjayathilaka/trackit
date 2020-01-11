@@ -14,6 +14,7 @@ public class ProjectResponseMobile {
     private String engName;
     private String conName;
     private String manName;
+    private String cliName;
 
     public String getEngineerId() {
         return engineerId;
@@ -101,6 +102,14 @@ public class ProjectResponseMobile {
 
     public void setManName(String manName) {
         this.manName = manName;
+    }
+
+    public String getCliName() {
+        return cliName;
+    }
+
+    public void setCliName(String cliName) {
+        this.cliName = cliName;
     }
 
     public ProjectResponseMobile(Long id, String projectName, String clientId, String deadline, String status, String engineerId, String constructorId, String projectMgrId) {
