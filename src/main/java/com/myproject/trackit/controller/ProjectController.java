@@ -37,7 +37,7 @@ public class ProjectController {
 
 		projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
 		projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
-		projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+		projectRes.setManName((!"null".equals(p.getProjectMgrId()) && p.getProjectMgrId() != null) ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
 		projectRes.setCliName(p.getClientId() != null ? userService.getById(Long.parseLong(p.getClientId())).getName(): "");
 
 		return projectRes;
@@ -92,7 +92,7 @@ public class ProjectController {
 	}
 	
 	@PutMapping(path="/projects")
-	public Project updateProject(@RequestBody Project project) {
+	public Project updateProject(@ModelAttribute Project project) {
 
 		Project savedProject = projectService.saveProject(project);
 
@@ -122,7 +122,7 @@ public class ProjectController {
 
 			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
 			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
-			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+			projectRes.setManName((!"null".equals(p.getProjectMgrId()) && p.getProjectMgrId() != null) ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
 
 			return projectRes;
 		}).collect(Collectors.toList());

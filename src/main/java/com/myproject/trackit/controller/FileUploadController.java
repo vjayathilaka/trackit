@@ -95,7 +95,7 @@ public class FileUploadController {
     public ResponseEntity<InputStreamResource> downloadProjectImage(@PathVariable String fileName, HttpServletRequest request) throws IOException {
 		Long id = Long.parseLong(fileName);
 
-		String projectMapFileName = "floorPlan_"+id;
+		String projectMapFileName = "floorPlan_"+id+".png";
 		
 		Resource imgFile = fileUploadService.loadFileAsResource(projectMapFileName);
 	        return ResponseEntity
