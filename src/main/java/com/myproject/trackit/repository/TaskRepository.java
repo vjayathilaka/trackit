@@ -11,5 +11,7 @@ import com.myproject.trackit.domain.Task;
 public interface TaskRepository extends JpaRepository<Task, Long>{
 
 	List<Task> findByProjectIdAndStatus(Long projectId, String status);
+	
+	List<Task> getByAssignee_id(Long userId);
 
 }

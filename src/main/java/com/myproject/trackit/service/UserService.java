@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myproject.trackit.controller.AES;
+import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.domain.User;
+import com.myproject.trackit.repository.TaskRepository;
 import com.myproject.trackit.repository.UserRepository;
 import com.myproject.trackit.response.UserLoginResponse;
 
@@ -15,6 +17,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	public User registerUserMobail(User user) {
 		
@@ -111,10 +115,18 @@ public class UserService {
 	
 	//
 	public void deleteUser(Long userId) {
+		
+		List<Task> tasks = taskRepository.getByAssignee_id(userId);
+		
+		for (Task task : tasks) {
+			task.setAssignee(null);
+			taskRepository.save(task);
+		}
+		
 		userRepository.deleteById(userId);
+		
 	}
 	
-//	//Angular Assignee for add project
 //	public User getByIdAngular(Long id) {
 //		return userRepository.findById(id).get();
 //	}

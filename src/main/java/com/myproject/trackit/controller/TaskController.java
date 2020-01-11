@@ -56,16 +56,21 @@ public class TaskController {
 		Task saveTask = taskService.saveTask(task);
 		
 		return new TaskResponse(Long.toString(saveTask.getId()));
-	}
-	
+	}	
 	//my
 	@PostMapping(path="/tasks/ui/")
 	public Task saveTask(@RequestBody Task task) {
-	
 		return taskService.saveTask(task);
-		
 	}
+	
+//	//get by status
+//	@GetMapping(path="tasks/{status}")
+//	public List<Task> getTaskByStatus(@RequestBody String status)
+//		
+//	
 
+	
+	
 	@DeleteMapping(path="/tasks/{id}")
 	public Map<String, Boolean> deleteById(@PathVariable Long id) {
 		taskService.deleteTask(id);
@@ -73,4 +78,5 @@ public class TaskController {
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+
 }

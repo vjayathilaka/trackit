@@ -8,21 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.trackit.domain.Issue;
 import com.myproject.trackit.domain.Project;
-import com.myproject.trackit.domain.ProjectResponse;
 import com.myproject.trackit.domain.Task;
 import com.myproject.trackit.repository.ProjectRepository;
-import com.myproject.trackit.response.UserLoginResponse;
+
 
 @Service
 public class ProjectService {
 	
 	@Autowired
 	ProjectRepository projectRepository;
-	//
-//	@Autowired
-//	UserLoginResponse loginResponse;
-//	@Autowired
-//	ProjectResponse projectResponce;
+
 
 	public Project getProject(Long id) {
 		Optional<Project> optionalProject = projectRepository.findById(id);
@@ -32,10 +27,10 @@ public class ProjectService {
 			return null;
 	}
 	
-	public List<Task> getProjectTasks(Long projectId) {		
-		Optional<Project> optionalProject = projectRepository.findById(projectId);
-		if(optionalProject.isPresent())
-			return optionalProject.get().getTasks();
+	public List<Task> getProjectTasks(Long projectId) {
+		Optional<Project> optionalProjectTask = projectRepository.findById(projectId);
+		if(optionalProjectTask.isPresent())
+			return optionalProjectTask.get().getTasks();
 		else
 			return null;
 		
@@ -65,15 +60,9 @@ public class ProjectService {
 			return null;
 	}
 	
-	//provide projects using client id
 	
 	public List<Project> getAllProjects(Long clientId){
 		
-//		if(loginResponse.getUserId() == projectResponce.getClientId(){
-//			return projectRepository.findAll();
-//		}
-//		Optional<Project> clientProject = projectRepository.findById(clientId);
-//		if(clientProject.)
 		return projectRepository.findAll();
 	}
 	
