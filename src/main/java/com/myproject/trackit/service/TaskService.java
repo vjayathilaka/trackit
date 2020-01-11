@@ -45,6 +45,11 @@ public class TaskService {
 		return taskRepository.findAll();
 	}
 
+//	public List<Task> getTaskByStatus(String status) {
+//		// TODO Auto-generated method stub
+//		return taskRepository.findByProjectIdAndStatus(projectId, status);
+//	}
+
 //	//angular save task
 //	public Task createTask(Task task) {
 //		Task saveTask = taskRepository.save(task);

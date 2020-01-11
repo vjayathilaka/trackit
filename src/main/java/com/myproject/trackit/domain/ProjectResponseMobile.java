@@ -11,6 +11,7 @@ public class ProjectResponseMobile {
     private String constructorId;
     private String projectMgrId;
 
+    private String cliName;
     private String engName;
     private String conName;
     private String manName;
@@ -79,8 +80,18 @@ public class ProjectResponseMobile {
     public void setProjectMgrId(String projectMgrId) {
         this.projectMgrId = projectMgrId;
     }
+    
+    
 
-    public String getEngName() {
+    public String getCliName() {
+		return cliName;
+	}
+
+	public void setCliName(String cliName) {
+		this.cliName = cliName;
+	}
+
+	public String getEngName() {
         return engName;
     }
 

@@ -72,7 +72,7 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	//delete
+	//
 	@DeleteMapping(path="/users/{id}")
 	public Map<String, Boolean> deleteProject(@PathVariable Long id) {
 		userService.deleteUser(id);
@@ -81,11 +81,13 @@ public class UserController {
 		return response;
 	}
 	
+	@GetMapping(path="/user/delete/{id}")
+	public Integer deleteMobileProject(@PathVariable Long id) {
+		userService.deleteUser(id);
+
+		return 1;
+	}
 	
-//	@GetMapping(path="/users/ui/{id}")
-//	public User getByIdAngular(@PathVariable Long id) {
-//		return userService.getByIdAngular(id);
-//	}
 	
 	@GetMapping(path="/users/ang")
 	public List<User> getAllUsersAng() {
