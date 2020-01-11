@@ -139,5 +139,65 @@ public class ProjectController {
 	public List<Project> getProjectsByProjectMgrId(@PathVariable String mgrId) {
 		return projectService.getProjectsByProjectMgrId(mgrId);
 	}
+//==========================================================================================
+	@GetMapping(path="/projects/mobile/client/{clientId}")
+	public List<ProjectResponseMobile> getProjectsByClientIdMobile(@PathVariable String clientId) {
+		return projectService.getProjectsByClientId(clientId).stream().map(p -> {
+			ProjectResponseMobile projectRes = new ProjectResponseMobile(
+					p.getId(), p.getProjectName(), p.getClientId(), p.getDeadline(), p.getStatus(), p.getEngineerId(), p.getConstructorId(),
+					p.getProjectMgrId());
+
+			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+
+			return projectRes;
+		}).collect(Collectors.toList());
+	}
+
+	@GetMapping(path="/projects/mobile/constructor/{constroctorId}")
+	public List<ProjectResponseMobile> getProjectsByConstructorIdMobile(@PathVariable String constroctorId) {
+		return projectService.getProjectsByConstructorId(constroctorId).stream().map(p -> {
+			ProjectResponseMobile projectRes = new ProjectResponseMobile(
+					p.getId(), p.getProjectName(), p.getClientId(), p.getDeadline(), p.getStatus(), p.getEngineerId(), p.getConstructorId(),
+					p.getProjectMgrId());
+
+			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+
+			return projectRes;
+		}).collect(Collectors.toList());
+	}
+
+	@GetMapping(path="/projects/mobile/engineer/{engineerId}")
+	public List<ProjectResponseMobile> getProjectsByEngineerIdMobile(@PathVariable String engineerId) {
+		return projectService.getProjectsByEngineerId(engineerId).stream().map(p -> {
+			ProjectResponseMobile projectRes = new ProjectResponseMobile(
+					p.getId(), p.getProjectName(), p.getClientId(), p.getDeadline(), p.getStatus(), p.getEngineerId(), p.getConstructorId(),
+					p.getProjectMgrId());
+
+			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+
+			return projectRes;
+		}).collect(Collectors.toList());
+	}
+
+	@GetMapping(path="/projects/mobile/projectmgr/{mgrId}")
+	public List<ProjectResponseMobile> getProjectsByProjectMgrIdMobile(@PathVariable String mgrId) {
+		return projectService.getProjectsByProjectMgrId(mgrId).stream().map(p -> {
+			ProjectResponseMobile projectRes = new ProjectResponseMobile(
+					p.getId(), p.getProjectName(), p.getClientId(), p.getDeadline(), p.getStatus(), p.getEngineerId(), p.getConstructorId(),
+					p.getProjectMgrId());
+
+			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+
+			return projectRes;
+		}).collect(Collectors.toList());
+	}
 
 }
