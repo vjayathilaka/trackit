@@ -1,30 +1,21 @@
 package com.myproject.trackit.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.myproject.trackit.domain.*;
+import com.myproject.trackit.service.FileUploadService;
+import com.myproject.trackit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.myproject.trackit.domain.Issue;
-import com.myproject.trackit.domain.IssueResponse;
-import com.myproject.trackit.domain.Project;
-import com.myproject.trackit.domain.ProjectResponse;
-import com.myproject.trackit.domain.Task;
-import com.myproject.trackit.domain.TaskResponse;
 import com.myproject.trackit.service.ProjectService;
 import com.myproject.trackit.service.TaskService;
 
-@CrossOrigin()
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ProjectController {
 	
@@ -32,6 +23,10 @@ public class ProjectController {
 	private ProjectService projectService;
 	@Autowired
 	private TaskService taskService;
+	@Autowired
+	private FileUploadService fileUploadService;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping(path="/projects/{id}")
 	public Project getProject(@PathVariable Long id) {	
@@ -73,9 +68,16 @@ public class ProjectController {
 	}
 	
 	@PostMapping(path="/projects")
-	public ProjectResponse saveProject(@RequestBody Project project) {
+	public ProjectResponse saveProject(@ModelAttribute Project project) {
 		project.setStatus("ongoing");
 		Project saveProject = projectService.saveProject(project);
+
+		try {
+			fileUploadService.saveProjectFile(project.getImage(), project.getId());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return new ProjectResponse(Long.toString(saveProject.getId()));
 	}
 	
@@ -90,6 +92,21 @@ public class ProjectController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return response;
+	}
+
+	@GetMapping(path="/projects/mobile")
+	public List<ProjectResponseMobile> getAllProjectsMobile() {
+		return projectService.getAllProjects().stream().map(p -> {
+			ProjectResponseMobile projectRes = new ProjectResponseMobile(
+					p.getId(), p.getProjectName(), p.getClientId(), p.getDeadline(), p.getStatus(), p.getEngineerId(), p.getConstructorId(),
+					p.getProjectMgrId());
+
+			projectRes.setEngName(p.getEngineerId() != null ? userService.getById(Long.parseLong(p.getEngineerId())).getName(): "");
+			projectRes.setConName(p.getConstructorId() != null ? userService.getById(Long.parseLong(p.getConstructorId())).getName(): "");
+			projectRes.setManName(p.getProjectMgrId() != null ? userService.getById(Long.parseLong(p.getProjectMgrId())).getName(): "");
+
+			return projectRes;
+		}).collect(Collectors.toList());
 	}
 	
 	//project list provide
